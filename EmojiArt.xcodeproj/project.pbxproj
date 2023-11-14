@@ -67,16 +67,12 @@
 		88772B532ADEC6FF00D1EF55 /* EmojiArt */ = {
 			isa = PBXGroup;
 			children = (
-				881FDC442AE006B500817C49 /* EmojiArtDocumentView.swift */,
-				881FDC422AE006AE00817C49 /* EmojiArtDocument.swift */,
-				88772B622ADEC80300D1EF55 /* EmojiArt.swift */,
+				88B41C9B2B03CFCE003A93AC /* model */,
+				88B41C9A2B03CFA1003A93AC /* Viewmodel */,
+				88B41C992B03CF7E003A93AC /* Views */,
 				88772B542ADEC6FF00D1EF55 /* EmojiArtApp.swift */,
-				88772B562ADEC6FF00D1EF55 /* ContentView.swift */,
 				881FDC402AE002B300817C49 /* Sturldata.swift */,
 				88772B6A2ADECE5200D1EF55 /* Extensions.swift */,
-				8899CB032AE93E200056C22E /* Palette.swift */,
-				8899CB052AE93F830056C22E /* PaletteStore.swift */,
-				8899CB072AE9431F0056C22E /* PaletteChooserView.swift */,
 				88772B582ADEC70100D1EF55 /* Assets.xcassets */,
 				88772B5A2ADEC70100D1EF55 /* Preview Content */,
 			);
@@ -89,6 +85,34 @@
 				88772B5B2ADEC70100D1EF55 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		88B41C992B03CF7E003A93AC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				88772B562ADEC6FF00D1EF55 /* ContentView.swift */,
+				881FDC442AE006B500817C49 /* EmojiArtDocumentView.swift */,
+				8899CB072AE9431F0056C22E /* PaletteChooserView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		88B41C9A2B03CFA1003A93AC /* Viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				881FDC422AE006AE00817C49 /* EmojiArtDocument.swift */,
+				8899CB052AE93F830056C22E /* PaletteStore.swift */,
+			);
+			path = Viewmodel;
+			sourceTree = "<group>";
+		};
+		88B41C9B2B03CFCE003A93AC /* model */ = {
+			isa = PBXGroup;
+			children = (
+				88772B622ADEC80300D1EF55 /* EmojiArt.swift */,
+				8899CB032AE93E200056C22E /* Palette.swift */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

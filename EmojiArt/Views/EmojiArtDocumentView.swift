@@ -78,7 +78,19 @@ struct EmojiArtDocumentView: View {
     @ViewBuilder
     private func documentContents (in geometry : GeometryProxy) -> some View {
         // what gets dragged and pinched --> content of our documents (background and emoji's
-        AsyncImage(url: document.background)
+        AsyncImage(url: document.background) { phase in
+            // handeling error if image drop doesn't work
+            if let image = phase.image {
+                image
+            } else if let url = document.background {
+                if phase.error != nil {
+                    Text("\(url)")
+                } else  {
+                    ProgressView() // spinning thing
+                }
+            }
+        }
+        
             .position(Emoji.Position.zero.in(geometry))
         ForEach(document.emojis) { emoji in
             Text(emoji.string)

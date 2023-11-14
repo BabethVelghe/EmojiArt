@@ -6,16 +6,43 @@
 //  Copyright (c) 2023 Stanford University
 //
 
+
+// Saving things have to be in the view model because it needs to be presented to the view
+
+
 import SwiftUI
 
 class EmojiArtDocument: ObservableObject {
     typealias Emoji = EmojiArt.Emoji
     
-    @Published private var emojiArt = EmojiArt()
+    @Published private var emojiArt = EmojiArt() {
+        didSet {
+            autosave()
+        }
+    }
+    
+    // adding it into our sandbox
+    private let autosaveUrl: URL = URL.documentsDirectory.appendingPathComponent("Autosaved.emojiart")
+    
+    private func autosave () {
+        save(to: autosaveUrl)
+        print("autosaved to \(autosaveUrl)")
+    }
+    private func save(to url: URL ) {
+        do {
+            let data = try emojiArt.json()
+            try data.write(to: url)
+        } catch let error {
+            // error is the error thrown
+            print("emojiArtDocument: error while saving \(error.localizedDescription)")
+        }
+    }
     
     init() {
-        emojiArt.addEmoji("🚲", at: .init(x: -200, y: -150), size: 200)
-        emojiArt.addEmoji("🔥", at: .init(x: 250, y: 100), size: 80)
+        if let data = try? Data(contentsOf: autosaveUrl),
+           let autosavedEmojiArt = try? EmojiArt(json: data) {
+            emojiArt = autosavedEmojiArt
+        }
     }
     
     var emojis: [Emoji] {
