@@ -23,8 +23,11 @@ extension UserDefaults {
     }
 }
 
-class PaletteStore : ObservableObject {
+class PaletteStore : ObservableObject, Identifiable {
+    
     let name: String
+    
+    var id: String {name}
     private var userDefaultsKey: String { "PaletteStore:" + name }
     
     var palettes: [Palette] {
@@ -103,4 +106,16 @@ class PaletteStore : ObservableObject {
         append(Palette(name: name, emojis: emojis))
     }
 }
+// you can also added in de main struct
+extension PaletteStore: Hashable {
+    static func == (lhs: PaletteStore, rhs: PaletteStore) -> Bool {
+        lhs.name == rhs.name
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+    
+}
+
 

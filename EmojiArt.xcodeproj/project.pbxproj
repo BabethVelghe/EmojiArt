@@ -19,6 +19,9 @@
 		8899CB042AE93E200056C22E /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8899CB032AE93E200056C22E /* Palette.swift */; };
 		8899CB062AE93F830056C22E /* PaletteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8899CB052AE93F830056C22E /* PaletteStore.swift */; };
 		8899CB082AE9431F0056C22E /* PaletteChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8899CB072AE9431F0056C22E /* PaletteChooserView.swift */; };
+		88FD4A2B2B05552E00D069B8 /* PaletteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FD4A2A2B05552E00D069B8 /* PaletteEditorView.swift */; };
+		88FD4A2D2B0562AD00D069B8 /* EditablePaletteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FD4A2C2B0562AD00D069B8 /* EditablePaletteListView.swift */; };
+		88FD4A2F2B056B0000D069B8 /* PaletteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FD4A2E2B056B0000D069B8 /* PaletteManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +38,9 @@
 		8899CB032AE93E200056C22E /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		8899CB052AE93F830056C22E /* PaletteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteStore.swift; sourceTree = "<group>"; };
 		8899CB072AE9431F0056C22E /* PaletteChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteChooserView.swift; sourceTree = "<group>"; };
+		88FD4A2A2B05552E00D069B8 /* PaletteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteEditorView.swift; sourceTree = "<group>"; };
+		88FD4A2C2B0562AD00D069B8 /* EditablePaletteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditablePaletteListView.swift; sourceTree = "<group>"; };
+		88FD4A2E2B056B0000D069B8 /* PaletteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +99,9 @@
 				88772B562ADEC6FF00D1EF55 /* ContentView.swift */,
 				881FDC442AE006B500817C49 /* EmojiArtDocumentView.swift */,
 				8899CB072AE9431F0056C22E /* PaletteChooserView.swift */,
+				88FD4A2A2B05552E00D069B8 /* PaletteEditorView.swift */,
+				88FD4A2C2B0562AD00D069B8 /* EditablePaletteListView.swift */,
+				88FD4A2E2B056B0000D069B8 /* PaletteManager.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,16 +194,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88FD4A2F2B056B0000D069B8 /* PaletteManager.swift in Sources */,
 				881FDC412AE002B300817C49 /* Sturldata.swift in Sources */,
 				88772B632ADEC80300D1EF55 /* EmojiArt.swift in Sources */,
 				8899CB082AE9431F0056C22E /* PaletteChooserView.swift in Sources */,
 				881FDC452AE006B500817C49 /* EmojiArtDocumentView.swift in Sources */,
+				88FD4A2D2B0562AD00D069B8 /* EditablePaletteListView.swift in Sources */,
 				88772B6B2ADECE5200D1EF55 /* Extensions.swift in Sources */,
 				8899CB062AE93F830056C22E /* PaletteStore.swift in Sources */,
 				881FDC432AE006AE00817C49 /* EmojiArtDocument.swift in Sources */,
 				88772B572ADEC6FF00D1EF55 /* ContentView.swift in Sources */,
 				88772B552ADEC6FF00D1EF55 /* EmojiArtApp.swift in Sources */,
 				8899CB042AE93E200056C22E /* Palette.swift in Sources */,
+				88FD4A2B2B05552E00D069B8 /* PaletteEditorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
