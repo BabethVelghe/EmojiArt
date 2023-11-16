@@ -26,20 +26,46 @@ struct EmojiArtDocumentView: View {
                 .scrollIndicators(.hidden)
         }
     }
-    
+    @State private var showBackgroundFailureAlert = false
     private var documentBody: some View {
         GeometryReader { geometry in
             ZStack {
                 Color.white
+                if document.background.isFetching {
+                    ProgressView()
+                        .scaleEffect(2)
+                        .tint(.blue)
+                        .position(Emoji.Position.zero.in(geometry))
+                }
                 documentContents(in: geometry)
                     .scaleEffect(zoom * gestureZoom) // may scale effect is not just te zoom but is that times what every the gesture is
                     .offset(pan + gesturePan)
             }
             // to have both of the gestures to be recognize
             .gesture(panGesture.simultaneously(with: zoomGesture))
+            .onTapGesture(count: 2) {
+                zoomToFit(document.bbox, in: geometry)
+            }
             .dropDestination(for: Sturldata.self) { sturldatas, location in
                 return drop(sturldatas, at: location, in: geometry)
             }
+            .onChange(of: document.background.failureReason) { reason in
+                showBackgroundFailureAlert = (reason != nil)
+            }
+            .onChange(of: document.background.uiImage) { uiImage in
+                zoomToFit(uiImage?.size, in: geometry)
+            }
+            .alert(
+                "Set Background",
+                isPresented: $showBackgroundFailureAlert,
+                presenting: document.background.failureReason,
+                actions: { reason in
+                    Button("OK", role: .cancel) { }
+                },
+                message: { reason in
+                    Text(reason)
+                }
+            )
         }
     }
     
@@ -74,24 +100,34 @@ struct EmojiArtDocumentView: View {
                 pan += value.translation
             }
     }
+    private func zoomToFit(_ size: CGSize?, in geometry: GeometryProxy) {
+        if let size {
+            zoomToFit(CGRect(center: .zero, size: size), in: geometry)
+        }
+    }
     
-    @ViewBuilder
-    private func documentContents (in geometry : GeometryProxy) -> some View {
-        // what gets dragged and pinched --> content of our documents (background and emoji's
-        AsyncImage(url: document.background) { phase in
-            // handeling error if image drop doesn't work
-            if let image = phase.image {
-                image
-            } else if let url = document.background {
-                if phase.error != nil {
-                    Text("\(url)")
-                } else  {
-                    ProgressView() // spinning thing
-                }
+    private func zoomToFit(_ rect: CGRect, in geometry: GeometryProxy) {
+        withAnimation {
+            if rect.size.width > 0, rect.size.height > 0,
+               geometry.size.width > 0, geometry.size.height > 0 {
+                let hZoom = geometry.size.width / rect.size.width
+                let vZoom = geometry.size.height / rect.size.height
+                zoom = min(hZoom, vZoom)
+                pan = CGOffset(
+                    width: -rect.midX * zoom,
+                    height: -rect.midY * zoom
+                )
             }
         }
-        
-            .position(Emoji.Position.zero.in(geometry))
+    }
+    
+ 
+    @ViewBuilder
+    private func documentContents(in geometry: GeometryProxy) -> some View {
+        if let uiImage = document.background.uiImage {
+            Image(uiImage: uiImage)
+                .position(Emoji.Position.zero.in(geometry))
+        }
         ForEach(document.emojis) { emoji in
             Text(emoji.string)
                 .font(emoji.font)
