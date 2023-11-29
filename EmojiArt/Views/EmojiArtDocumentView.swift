@@ -9,13 +9,17 @@
 import SwiftUI
 
 struct EmojiArtDocumentView: View {
+    @Environment(\.undoManager) var undoManager
+    
     typealias Emoji = EmojiArt.Emoji
     
     @ObservedObject var document: EmojiArtDocument
+    @StateObject var paletteStore = PaletteStore(named: "Shared")
     
     private let emojis = "👻🍎😃🤪☹️🤯🐶🐭🦁🐵🦆🐝🐢🐄🐖🌲🌴🌵🍄🌞🌎🔥🌈🌧️🌨️☁️⛄️⛳️🚗🚙🚓🚲🛺🏍️🚘✈️🛩️🚀🚁🏰🏠❤️💤⛵️"
-    
-    private let paletteEmojiSize: CGFloat = 40
+    // buid in fonts will automaticily scale when the user settings of font are bigger
+    // but doesn't happen with self made fonts like this one
+    @ScaledMetric var paletteEmojiSize: CGFloat = 40
 
     var body: some View {
         VStack(spacing: 0) {
@@ -24,6 +28,10 @@ struct EmojiArtDocumentView: View {
                 .font(.system(size: paletteEmojiSize))
                 .padding(.horizontal)
                 .scrollIndicators(.hidden)
+        }
+        .environmentObject(paletteStore)
+        .toolbar {
+            UndoButton()
         }
     }
     @State private var showBackgroundFailureAlert = false
@@ -139,14 +147,15 @@ struct EmojiArtDocumentView: View {
         for sturldata in sturldatas {
             switch sturldata {
             case .url(let url):
-                document.setBackground(url)
+                document.setBackground(url, undoWith: undoManager)
                 return true
             case .string(let emoji):
                 document.addEmoji(
                     emoji,
                     at: emojiPosition(at: location, in: geometry),
                     // controlling the size of your emojis 
-                    size: paletteEmojiSize / zoom
+                    size: paletteEmojiSize / zoom,
+                    undoWith: undoManager
                 )
                 return true
             default:

@@ -41,7 +41,7 @@ class PaletteStore : ObservableObject, Identifiable {
             }
         }
     }
-    
+    @State private var observer: NSObjectProtocol?
     init(named name: String) {
         self.name = name
         if palettes.isEmpty {
@@ -49,6 +49,18 @@ class PaletteStore : ObservableObject, Identifiable {
             if palettes.isEmpty {
                 palettes = [Palette(name: "Warning", emojis: "⚠️")]
             }
+        }
+        observer = NotificationCenter.default.addObserver(
+            forName: UserDefaults.didChangeNotification,
+            object: nil,
+            queue: .main) { [weak self] notification in
+                self?.objectWillChange.send()
+            }
+    }
+    
+    deinit {
+        if let observer {
+            NotificationCenter.default.removeObserver(observer)
         }
     }
     // will make sure index is never out of bounts
